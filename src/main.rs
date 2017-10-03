@@ -2,7 +2,6 @@
 #![plugin(rocket_codegen)]
 
 extern crate rocket;
-
 extern crate rocket_contrib;
 
 extern crate tantivy;
@@ -17,6 +16,8 @@ extern crate exonum_leveldb;
 extern crate leveldb_sys;
 
 #[macro_use] extern crate bart_derive;
+
+extern crate katana;
 
 use rocket::State;
 
@@ -105,10 +106,16 @@ fn static_files(file: PathBuf) -> Option<NamedFile> {
     NamedFile::open(Path::new("static/").join(file)).ok()
 }
 
+struct ResultsReport {
+    title: String,
+    display_text: String
+}
+
 #[derive(BartDisplay)]
 #[template = "templates/results.html"]
 struct Results {
-    titles: Vec<String>
+    reports: Vec<ResultsReport>,
+    query: String
 }
 
 #[derive(FromForm, Debug)]
@@ -116,7 +123,7 @@ struct FormQuery {
     q: String
 }
 
-#[get   ("/query?<req>")]
+#[get("/query?<req>")]
 fn form_query(
     ctx: State<Arc<Mutex<(Index, QueryParser, (Schema, Field), Database)>>>,
     req: FormQuery
@@ -127,14 +134,28 @@ fn form_query(
         query: req.q.clone()
     });
 
-    let reports = do_search(search_ctx, query)?;
+    let mut reports = do_search(search_ctx, query)?;
 
     //println!("{:?}", req);
     //Ok(Json(reports))
 
-    let x: Vec<String> = reports.iter().map(|report| report.title.clone()).collect();
+    let results_reports = reports.iter().map(|report| {
+        let display_text = katana::cut(&report.body)
+            .iter().take(2).map(|s| s.to_string())
+            .collect::<Vec<String>>()
+            .join(" ");
 
-    let results = &Results { titles: x };
+        let title = report.title.to_owned();
+
+        ResultsReport {
+            title, display_text
+        }
+    }).collect::<Vec<ResultsReport>>();
+
+    let results = Results {
+        reports: results_reports,
+        query: req.q.clone()
+    };
 
     Ok(Html(results.to_string()))
 }
