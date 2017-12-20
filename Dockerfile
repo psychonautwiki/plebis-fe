@@ -6,4 +6,4 @@ RUN cd /my-source && cargo build -v --release
 
 WORKDIR /my-source/
 
-CMD ["/my-source/target/debug/plebis"]
+CMD ["/my-source/target/release/plebis"]
