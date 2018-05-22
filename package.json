@@ -5,6 +5,9 @@
   "repository": "git@github.com:psychonautwiki/plebis-fe.git",
   "author": "Kenan Sulayman <kenan@sly.mn>",
   "license": "MIT",
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
     "elasticsearch": "^15.0.0",
     "express": "^4.16.3",
