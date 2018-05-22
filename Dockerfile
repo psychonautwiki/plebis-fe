@@ -1,9 +1,15 @@
-FROM psychonaut/rust-nightly:latest
+FROM node:10.1.0-alpine
 
-ADD . /my-source
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-RUN cd /my-source && cargo build -v --release
+COPY package.json /usr/src/app/
 
-WORKDIR /my-source/
+RUN npm install && npm cache clean --force
 
-CMD ["/my-source/target/release/plebis"]
+COPY static /usr/src/app/static
+COPY templates /usr/src/app/templates
+
+COPY app.js /usr/src/app/
+
+CMD [ "npm", "start" ]

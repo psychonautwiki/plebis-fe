@@ -10,7 +10,7 @@ const handlebars = require('handlebars');
 const results_tpl = handlebars.compile(fs.readFileSync('./templates/results.hbs').toString());
 
 const esclient = new elasticsearch.Client({
-    host: 'localhost:9200'
+    host: process.env.ES_HOST || 'localhost:9200'
 });
 
 const app = express();

@@ -1,7 +1,7 @@
 {
   "name": "plebis-fe",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "repository": "git@github.com:psychonautwiki/plebis-fe.git",
   "author": "Kenan Sulayman <kenan@sly.mn>",
   "license": "MIT",
