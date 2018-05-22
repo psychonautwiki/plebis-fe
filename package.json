@@ -1,0 +1,13 @@
+{
+  "name": "plebis-fe",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:psychonautwiki/plebis-fe.git",
+  "author": "Kenan Sulayman <kenan@sly.mn>",
+  "license": "MIT",
+  "dependencies": {
+    "elasticsearch": "^15.0.0",
+    "express": "^4.16.3",
+    "handlebars": "^4.0.11"
+  }
+}

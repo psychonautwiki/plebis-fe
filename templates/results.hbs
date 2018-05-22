@@ -9,20 +9,43 @@
         <meta name="referrer" content="origin" />
         <meta name="HandheldFriendly" content="true" />
         <meta name="robots" content="noindex, nofollow" />
-        <title>1p-lsd at DuckDuckGo</title>
-        <link title="DuckDuckGo (HTML)" type="application/opensearchdescription+xml" rel="search" href="/opensearch_html.xml" />
+        <title>{{title}} on Plebis</title>
         <link href="/favicon.ico" rel="shortcut icon" />
         <link rel="apple-touch-icon" href="/assets/logo_icon128.v101.png" />
         <link rel="image_src" href="/assets/logo_homepage.normal.v101.png" />
-        <link rel="stylesheet" href="results.css" />
+        <link rel="stylesheet" href="/results.css" />
+        <style>
+            div.exp-tags {
+                margin: 4px 0 0 0;
+            }
+
+            div.exp-tags span.tag {
+                border: 1px solid gray;
+                margin: 2px 4px 0px 0px;
+                padding: 2px 2px;
+                font-size: 12px;
+            }
+
+            .obstrusive-tag {
+                border: 1px solid gray;
+                line-height: 150%;
+                font-size: 14px;
+                margin: 0px 0px 0px 0px;
+                padding: 1px 2px;
+            }
+
+            h2.result__title .obstrusive-tag:nth-of-type(1) {
+                margin-left: 3px;
+            }
+        </style>
     </head>
     <body class="body--serp">
             <div class="site-wrapper  js-site-wrapper">
                 <div id="header_wrapper" class="header-wrap js-header-wrap" style="top: 0px;">
                     <div id="header" class="header  cw">
-                        <div class="header__search-wrap"><a tabindex="-1" href="/" class="header__logo-wrap js-header-logo"><span class="header__logo js-logo-ddg">DuckDuckGo</span></a>
+                        <div class="header__search-wrap"><a tabindex="-1" href="/" class="header__logo-wrap js-header-logo"><span class="header__logo js-logo-ddg">Plebis</span></a>
                             <div class="header__content  header__search">
-                                <form id="search_form" class="search--adv  search--header  js-search-form has-text" name="x" action="/query" method="GET">
+                                <form id="search_form" class="search--adv  search--header  js-search-form has-text" name="x" action="/search" method="GET">
                                     <input type="text" name="q" tabindex="1" autocomplete="off" id="search_form_input" class="search__input--adv  js-search-input" value="{{query}}" autocapitalize="off" autocorrect="off">
                                     <input id="search_form_input_clear" class="search__clear  js-search-clear" type="button" tabindex="3" value="X">
                                     <input id="search_button" class="search__button  js-search-button" type="submit" tabindex="2" value="S">
@@ -31,7 +54,7 @@
                         </div>
                     </div>
                     <div class="header--aside">
-                        <a class="header--aside__msg js-side-menu-msg" href="/privacy">Wait. Notice as the seconds pass by.</a>
+                        <a class="header--aside__msg js-side-menu-msg" {{!--href="/privacy"--}}>Wait. Notice as the seconds pass by.</a>
                     </div>
                 </div>
                 <div id="zero_click_wrapper" class="zci-wrap"></div>
@@ -42,19 +65,23 @@
                         <div id="links_wrapper" class="serp__results js-serp-results">
                             <div class="ia-modules js-ia-modules"></div>
                             <div id="message" class="results--message"></div>
-                            <div id="links" class="results js-results">
+                            <div id="links" class="results js-results js-results-sidebar">
                                 {{#reports}}
-                                    <div id="r1-0" class="result results_links_deep highlight_d" data-domain="de.wikipedia.org" data-nir="1">
+                                    <div id="r1-0" class="result results_links_deep highlight_d" data-nir="1">
                                         <div class="result__body links_main links_deep">
-                                            <!-- <h2 class="result__title"><a class="result__a" rel="noopener" href="https://de.wikipedia.org/wiki/1P-LSD"><b>1P-LSD</b> - Wikipedia</a></h2> -->
-                                            <h2 class="result__title">{{.title}}</h2>
-                                            <!-- <div class="result__snippet"><b>1P-LSD</b> (1-Propionyl-D-lysergsäurediethylamid) ist eine psychedelisch wirkende psychotrope Substanz und Forschungschemikalie. <b>1P-LSD</b> ist ein Derivat der Lysergsäure ...</div> -->
-                                            <div class="result__snippet">{{.display_text}} …</div>
+                                            <h2 class="result__title"><a class="result__a" rel="noopener" href="{{{link}}}">{{{title}}}</a>{{#obstrusiveTags}} <span class="obstrusive-tag">{{{label}}}</span>{{/obstrusiveTags}}</h2>
+                                            {{!-- <h2 class="result__title">{{title}}</h2> --}}
+                                            <div class="result__snippet">{{{display_text}}}</div>
+                                            {{#if tags}}<div class="exp-tags">
+                                                {{#tags}}
+                                                    <span class="tag">{{label}}</span>
+                                                {{/tags}}
+                                            </div>{{/if}}
                                         </div>
                                     </div>
                                 {{/reports}}
                             </div>
-                            <div class="results--sidebar js-results-sidebar">
+                            {{!-- <div class="results--sidebar js-results-sidebar">
                                 <div class="sidebar-modules js-sidebar-modules">
                                     <div class="module module--about">
                                         <div class="module__content js-about-module-content">
@@ -72,7 +99,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
